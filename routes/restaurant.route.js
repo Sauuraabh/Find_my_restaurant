@@ -21,4 +21,8 @@ module.exports = (app) => {
         "/api/restaurant/:id",
         restaurantController.getRestaurantById
     );
+    app.get(
+      "/api/restaurant/rating/:ratingValue",
+      restaurantController.getRestaurantByRating
+    );
 };

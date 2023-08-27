@@ -104,3 +104,20 @@ exports.getRestaurantById = async (req, res) => {
         });
     };
 };
+
+exports.getRestaurantByRating = async (req, res) => {
+    try {
+        const ratingValue = req.params.ratingValue;
+        const restaurants = await Restaurant.find(
+            {
+                rating: { $gte: ratingValue },
+            }
+        );
+        return res.status(200).send(restaurants);
+    } catch (error) {
+        console.log(`Error while fetching restaurants : ${err.message}`);
+        return res.status(500).send({
+            message: "Some error occured while fetching the Restaurant",
+        });
+    };
+};
