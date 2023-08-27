@@ -62,3 +62,15 @@ exports.getAllRestaurants = async (req, res) => {
         });
     };
 };
+
+exports.categories = async (req, res) => {
+    try {
+        const categories = await Restaurant.distinct("category");
+        return res.status(200).send(categories);
+    } catch (err) {
+        console.log("Error while fetching categories", err.message);
+        return res.status(500).send({
+            message: `Some error occurred while fetching Categories`,
+        });
+    };
+};
