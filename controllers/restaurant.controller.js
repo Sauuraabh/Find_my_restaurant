@@ -180,7 +180,7 @@ exports.deleteRestaurantById = async (req, res) => {
         });
     } catch (error) {
         console.log(`Error in deleting restaurant data :  ${err.message}`);
-        return res.status(200).send({
+        return res.status(500).send({
             message: 'Some error occurred while deleting the Restaurant.'
         });
     };
