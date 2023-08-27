@@ -41,7 +41,24 @@ exports.createRestaurant = async (req, res) => {
     } catch (error) {
         console.log(`Error while creating a new restaurant: ${error}`);
         return res.status(500).send({
-            message: "Error while creating a new Restaurant",
+            message: `Some error occurred while creating the Restaurant`,
+        });
+    };
+};
+
+
+exports.getAllRestaurants = async (req, res) => {
+    try {
+        const restaurants = await Restaurant.find({});
+
+        return res.status(200).send({
+            restaurants: restaurants,
+            message: "Restaurants fetched successfully.",
+        });
+    } catch (error) {
+        console.log(`Error while fetching restaurants : ${error}`);
+        return res.status(500).send({
+            message: `Some error occured while fetching the Restaurants`,
         });
     };
 };
