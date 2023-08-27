@@ -46,7 +46,6 @@ exports.createRestaurant = async (req, res) => {
     };
 };
 
-
 exports.getAllRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find({});
@@ -78,7 +77,6 @@ exports.categories = async (req, res) => {
 exports.getRestaurantByCategory = async (req, res) => {
   try {
       const categoryName = req.params.categoryName;
-      console.log(categoryName);
       const restaurants = await Restaurant.find({ category: categoryName });
       return res.status(200).send(restaurants);
   } catch (err) {
@@ -88,3 +86,4 @@ exports.getRestaurantByCategory = async (req, res) => {
       });
   }
 };
+
