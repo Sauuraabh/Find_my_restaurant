@@ -132,7 +132,7 @@ exports.updateRestaurantById = async (req, res) => {
             message: "No Restaurant found with the given ID",
           });
         }
-        
+
         if (Object.keys(req.body).length === 0) {
             return res.status(400).send({
                 message: "Restaurant Data is required.",
@@ -156,6 +156,32 @@ exports.updateRestaurantById = async (req, res) => {
         console.log(`Error updating restaurant : ${error.message}`);
         return res.status(500).send({
             message: "Some error occurred while fetching the Restaurant",
+        });
+    };
+};
+
+exports.deleteRestaurantById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const restaurant = await Restaurant.findOne({ _id: id });
+
+        if (!restaurant) {
+            return res.status(200).send({
+                restaurant: null,
+                message: "Restaurant deleted successfully.",
+            });
+        }
+
+        await Restaurant.findOneAndDelete({ _id: id });
+
+        return res.status(200).send({
+            restaurant: restaurant,
+            message: "Restaurant deleted successfully.",
+        });
+    } catch (error) {
+        console.log(`Error in deleting restaurant data :  ${err.message}`);
+        return res.status(200).send({
+            message: 'Some error occurred while deleting the Restaurant.'
         });
     };
 };
