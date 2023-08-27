@@ -33,4 +33,8 @@ module.exports = (app) => {
       "/api/restaurant/:id",
       restaurantController.deleteRestaurantById
     );
+    app.delete(
+        "/api/restaurant/",
+        restaurantController.deleteAllRestaurants
+    );
 };

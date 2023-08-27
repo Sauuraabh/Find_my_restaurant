@@ -185,3 +185,25 @@ exports.deleteRestaurantById = async (req, res) => {
         });
     };
 };
+
+exports.deleteAllRestaurants = async (req, res) => {
+    try {
+        const restaurants = await Restaurant.deleteMany({});
+
+        if (restaurants.deletedCount === 0)
+            return res.status(200).send('null');
+
+        return res.status(200).send({
+            restaurants: {
+                acknowledged: restaurants.acknowledged,
+                deletedCount: restaurants.deletedCount,
+            },
+            message: "Restaurants deleted successfully.",
+        });
+    } catch (error) {
+        console.log(`Some error occured : ${err.message}`);
+        return res.status(500).send({
+            message: "Some error occured while deleting the Restaurant.",
+        });
+    };
+};
