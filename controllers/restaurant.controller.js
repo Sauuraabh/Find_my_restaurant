@@ -90,8 +90,8 @@ exports.getRestaurantByCategory = async (req, res) => {
 exports.getRestaurantById = async (req, res) => {
     try {
         const id = req.params.id;
-        const restaurant = await Restaurant.find({ _id: id });
-        if (restaurant.length === 0) {
+        const restaurant = await Restaurant.findOne({ _id: id });
+        if (!restaurant) {
             return res.status(404).send({
                 message: "No Restaurant found with the given ID",
             });
@@ -118,6 +118,44 @@ exports.getRestaurantByRating = async (req, res) => {
         console.log(`Error while fetching restaurants : ${err.message}`);
         return res.status(500).send({
             message: "Some error occured while fetching the Restaurant",
+        });
+    };
+};
+
+exports.updateRestaurantById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const restaurant = await Restaurant.findOne({ _id: id });
+
+        if (!restaurant) {
+          return res.status(200).send({
+            message: "No Restaurant found with the given ID",
+          });
+        }
+        
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).send({
+                message: "Restaurant Data is required.",
+            });
+        }
+        
+        req.body.name && (restaurant.name = req.body.name);
+        req.body.description && (restaurant.description = req.body.description);
+        req.body.category && (restaurant.category = req.body.category);
+        req.body.imageURL && (restaurant.imageURL = req.body.imageURL);
+        req.body.location && (restaurant.location = req.body.location);
+        req.body.phone && (restaurant.phone = req.body.phone);
+        req.body.rating && (restaurant.rating = req.body.rating);
+
+        await restaurant.save();
+
+        return res
+            .status(200)
+            .send({ message: "Restaurant updated successfully." });
+    } catch (error) {
+        console.log(`Error updating restaurant : ${error.message}`);
+        return res.status(500).send({
+            message: "Some error occurred while fetching the Restaurant",
         });
     };
 };

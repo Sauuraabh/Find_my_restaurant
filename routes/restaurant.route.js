@@ -25,4 +25,8 @@ module.exports = (app) => {
       "/api/restaurant/rating/:ratingValue",
       restaurantController.getRestaurantByRating
     );
+    app.put(
+        "/api/restaurant/:id",
+        restaurantController.updateRestaurantById
+    );
 };
