@@ -74,3 +74,17 @@ exports.categories = async (req, res) => {
         });
     };
 };
+
+exports.getRestaurantByCategory = async (req, res) => {
+  try {
+      const categoryName = req.params.categoryName;
+      console.log(categoryName);
+      const restaurants = await Restaurant.find({ category: categoryName });
+      return res.status(200).send(restaurants);
+  } catch (err) {
+    console.log("Error while fetching restaurants", err.message);
+      return res.status(500).send({
+          message: "Some error occured while fetching the Restaurant",
+      });
+  }
+};
