@@ -87,3 +87,20 @@ exports.getRestaurantByCategory = async (req, res) => {
   }
 };
 
+exports.getRestaurantById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const restaurant = await Restaurant.find({ _id: id });
+        if (restaurant.length === 0) {
+            return res.status(404).send({
+                message: "No Restaurant found with the given ID",
+            });
+        }
+        return res.status(200).send(restaurant);
+    } catch (error) {
+        console.log(`Restaurant not found : ${error.message}`);
+        return res.status(404).send({
+            message: "No Restaurant found with the given ID",
+        });
+    };
+};

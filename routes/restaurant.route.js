@@ -17,4 +17,8 @@ module.exports = (app) => {
       "/api/restaurant/categories/:categoryName",
       restaurantController.getRestaurantByCategory
     );
+    app.get(
+        "/api/restaurant/:id",
+        restaurantController.getRestaurantById
+    );
 };
